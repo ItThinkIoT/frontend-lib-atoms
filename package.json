@@ -1,0 +1,30 @@
+{
+  "name": "simple_frontend_library",
+  "version": "1.0.0",
+  "description": "Simple Library for AtomicReact",
+  "type": "module",
+  "exports": {
+    "./*": "./src/*"
+  },
+  "files": [
+    "./src"
+  ],
+  "scripts": {
+    "dev": "ts-node --transpile-only ./scripts/web_server.ts development",
+    "build": "ts-node ./scripts/build.ts",
+    "start": "npm run build && ts-node ./scripts/web_server.ts"
+  },
+  "author": "Guihgo",
+  "keywords": ["atomicreact-ts", "ar"],
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.20",
+    "atomicreact-ts": "^0.1.20",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.2.2",
+    "typescript-plugin-css-modules": "^5.0.2"
+  }
+}

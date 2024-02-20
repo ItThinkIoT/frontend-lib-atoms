@@ -1,0 +1,10 @@
+{
+	"folders": [
+		{
+			"path": ".."
+		}
+	],
+	"settings": {
+		"typescript.tsdk": "./node_modules/typescript/lib" /* CSS import - Step 1: use local typescript server */
+	}
+}
