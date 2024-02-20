@@ -8,7 +8,7 @@ This is a simple frontend Library using [AtomicReact-TS](https://github.com/Atom
 
 - `scripts` directory contain helpers scripts to build and serve http web server
 
-- `public` directory contain all library bundled (without AtomicReact Core)
+- `public` directory contain all library bundled
 
 See `tsconfig.json` to known how enable importing CSS files with visual studio 
 
