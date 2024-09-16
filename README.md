@@ -10,6 +10,24 @@
 
 See `tsconfig.json` to known how enable importing CSS files with visual studio 
 
+## Installing this private library
+
+```shell
+cd ~/.ssh
+nano config
+Host github.com
+  HostName github.com
+  User git
+  IdentityFile ~/.ssh/id_ed25519
+  IdentitiesOnly yes
+```
+
+```shell
+eval "$(ssh-agent -s)"
+ssh-add ~/.ssh/id_ed25519
+yarn add ssh://@github.com:ItThinkIoT/frontend-lib-atoms.git
+```
+
 ## Development
 
 Run development mode
