@@ -1,0 +1,73 @@
+/* Floating Z */
+.floatingZ {
+    --floatingZPeriod: 10s;
+    animation: floatingZ var(--floatingZPeriod) ease-in-out infinite;
+}
+
+@keyframes floatingZ {
+    0% {
+        box-shadow: 0 5px 15px 0px rgba(0, 0, 0, 0.6);
+        transform: scale(1);
+    }
+
+    50% {
+        box-shadow: 0 25px 15px 0px rgba(0, 0, 0, 0.2);
+        transform: scale(1.05);
+    }
+
+    100% {
+        box-shadow: 0 5px 15px 0px rgba(0, 0, 0, 0.6);
+        transform: scale(1);
+    }
+}
+
+/* Border Ratation With Gradient */
+.gradientBorder {
+    --glowColorOne: #0F0;
+    --glowColorTwo: #00F;
+    --rotationPeriod: 5s;
+    --borderWidth: -0.5em;
+    position: relative;
+}
+
+@property --gradientAngle {
+    syntax: "<angle>";
+    initial-value: 0deg;
+    inherits: false;
+}
+
+@keyframes gradientRotation {
+    0% {
+        --gradientAngle: 0deg;
+    }
+
+    100% {
+        --gradientAngle: 360deg;
+    }
+}
+
+.gradientBorder::before,
+.gradientBorder::after {
+    position: absolute;
+    content: "";
+    inset: var(--borderWidth);
+    border-radius: inherit;
+
+    z-index: -1;
+
+    background: conic-gradient(from var(--gradientAngle),
+            var(--glowColorOne),
+            var(--glowColorTwo),
+            var(--glowColorTwo),
+            var(--glowColorOne),
+            var(--glowColorOne));
+}
+
+.gradientBorder::after {
+    filter: blur(3.5rem);
+}
+
+.gradientBorder.withRotation::before,
+.gradientBorder.withRotation::after  {
+    animation: gradientRotation var(--rotationPeriod) linear infinite;
+}

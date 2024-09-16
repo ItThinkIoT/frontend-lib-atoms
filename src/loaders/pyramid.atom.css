@@ -1,0 +1,100 @@
+@keyframes spin {
+    100% {
+        transform: rotateX(-20deg) rotateY(-360deg);
+    }
+}
+.pyramid_loader {
+    position: relative;
+    width: 100px;
+    height: 100px;
+    display: block;
+    transform-style: preserve-3d;
+    transform: rotateX(-20deg) rotateY(0deg);
+    /* border: 1px solid red; */
+    animation: spin 4s linear infinite;
+}
+
+@keyframes float {
+	0% {
+		transform: translatey(0px);
+	}
+	50% {
+		transform: translatey(-15px) ;
+	}
+	100% {
+		transform: translatey(0px);
+	}
+}
+.wrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    animation: float 5s ease-in-out infinite;
+}
+
+
+.pyramid_loader .wrapper .side {
+    width: 70px;
+    height: 70px;
+    /* you can choose any gradient or color you want */
+    /* background: radial-gradient( #2F2585 10%, #F028FD 70%, #2BDEAC 120%); */
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    transform-origin: center top;
+    clip-path: polygon(50% 10%, 10% 90%, 90% 100%);
+}
+
+.pyramid_loader .wrapper .side1 {
+    transform: rotateZ(-30deg) rotateY(90deg);
+    /* background: conic-gradient(#2BDEAC, #F028FD, #D8CCE6, #2F2585); */
+}
+
+.pyramid_loader .wrapper .side2 {
+    transform: rotateZ(30deg) rotateY(90deg);
+    /* background: conic-gradient(#2F2585, #D8CCE6, #F028FD, #2BDEAC); */
+}
+
+.pyramid_loader .wrapper .side3 {
+    transform: rotateX(30deg);
+    /* background: conic-gradient(#2F2585, #D8CCE6, #F028FD, #2BDEAC); */
+}
+
+.pyramid_loader .wrapper .side4 {
+    transform: rotateX(-30deg);
+    /* background: conic-gradient(#2BDEAC, #F028FD, #D8CCE6, #2F2585); */
+    /* background: radial-gradient(); */
+}
+
+.pyramid_loader .shadow {
+    width: 60px;
+    height: 60px;
+    /* background: #8B5AD5; */
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    transform: rotateX(90deg) translateZ(-30px);
+    animation: float_shadow 5s ease-in-out infinite;
+}
+
+@keyframes float_shadow {
+	0% {
+        transform: rotateX(90deg) translateZ(-40px);
+        filter: blur(6px);
+	}
+	50% {
+        transform: rotateX(90deg) translateZ(-40px);
+        filter: blur(12px);
+	}
+	100% {
+        transform: rotateX(90deg) translateZ(-40px);
+        filter: blur(6px);
+	}
+}

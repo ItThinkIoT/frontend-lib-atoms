@@ -24,7 +24,7 @@
     align-items: center;
 }
 
-.panel>[a-n] {
+.panel > [a-n]  {
     flex-grow: 1;
     border: 1px dashed grey;
     display: flex;
@@ -41,7 +41,7 @@
     display: flex;
     flex-direction: column;
 }
-.widget [a-n] {
+.widget > [a-n] {
     border: 1px dotted #bbbbbb;
     
 }

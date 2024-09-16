@@ -1,0 +1,12 @@
+.square {
+    position: relative;
+    border-radius: 10px;
+    filter: drop-shadow(5px 10px 5px rgba(0, 0, 0, 0.3));
+}
+
+
+.square svg {
+    border-radius: inherit;
+    z-index: 1;
+    filter: drop-shadow(5px 10px 5px rgba(0, 0, 0, 0.3));
+}

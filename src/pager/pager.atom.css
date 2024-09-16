@@ -1,0 +1,13 @@
+
+
+.pager {
+
+}
+
+.pager > * {
+
+}
+
+.pager > *.hidden {
+    display: none;
+}

@@ -1,0 +1,25 @@
+.steps {
+    border: 1px solid transparent;
+    display: flex;
+    flex-direction: row;
+    overflow-x: visible;
+    -webkit-touch-callout: none;
+    /* iOS Safari */
+    -webkit-user-select: none;
+    /* Chrome/Safari/Opera */
+    -khtml-user-select: none;
+    /* Konqueror */
+    -moz-user-select: none;
+    /* Firefox */
+    -ms-user-select: none;
+    /* Internet Explorer/Edge */
+    user-select: none;
+    /* Non-prefixed version */
+    touch-action: none;
+    -webkit-transition: 0.45s;
+    -moz-transition: 0.45s;
+    -ms-transition: 0.45s;
+    -o-transition: 0.45s;
+    transition: 0.45s;
+    cursor: pointer;
+}

@@ -1,0 +1,95 @@
+.input {
+    width: 100%;
+    padding-top: 20px;
+    position: relative;
+    display: block;
+}
+
+.input .error {
+    display: none;
+    font-size: 14px;
+    text-align: right;
+    margin-top: 2px;
+}
+
+.input.s_active label {
+    top: 0;
+    left: 0;
+    font-size: 16px;
+    color: var(--LabelPrimary);
+}
+
+.input.s_active .placeholder {
+    right: 16px !important;
+}
+
+.input.s_disabled input {
+    pointer-events: none;
+    background-color: var(--OffDisabled);
+    color: var(--OffDisabled);
+}
+
+.input.s_error * {
+    color: var(--ErrorPrimary) !important;
+}
+
+.input.s_error .error {
+    display: block;
+}
+
+.input.s_error input {
+    border: 1px solid var(--ErrorDark)
+}
+
+
+.input label,
+.input .placeholder {
+    position: absolute;
+    top: calc(20px + 10px);
+    left: 8px;
+    user-select: none;
+    pointer-events: none;
+    font-size: 14px;
+    color: var(--LabelSecondary);
+    -webkit-transition: 0.4s;
+    -moz-transition: 0.4s;
+    -ms-transition: 0.4s;
+    -o-transition: 0.4s;
+    transition: 0.4s;
+}
+
+.input .placeholder {
+    left: auto !important;
+    right: 8px !important;
+    color: var(--LabelTertiary) !important;
+}
+
+.input input {
+    display: block;
+    width: calc(100% - 12px);
+    height: 36px;
+    background-color: var(--BackgroundSecondary);
+    border: none;
+    border-radius: 3px;
+    font-size: 16px;
+    appearance: none;
+    color: var(--LabelSecondary);
+    padding: 0 6px;
+}
+
+/* Chrome, Safari, Edge, Opera */
+.input input::-webkit-outer-spin-button,
+.input input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Firefox */
+.input input[type=number] {
+    -moz-appearance: textfield;
+}
+
+.input input:focus {
+    outline: none;
+    border: 1px solid var(--ActivePrimary)
+}

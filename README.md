@@ -1,6 +1,4 @@
-# Simple Frontend Library
-
-This is a simple frontend Library using [AtomicReact-TS](https://github.com/AtomicReact/AtomicReact-TS). You can use this for boilerplate for your next projects.
+# ItThink Atoms Library
 
 [Demo] See the Library: [https://atomicreact.github.io/simple-frontend-library/](https://atomicreact.github.io/simple-frontend-library/)
 

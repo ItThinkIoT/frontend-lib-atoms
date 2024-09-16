@@ -1,0 +1,88 @@
+.button {
+    width: 100%;
+    position: relative;
+    --RadiusSize: 20px;
+    white-space: normal;
+    word-wrap: break-word;
+    -webkit-transition: transform 0.3s;
+    -moz-transition: transform 0.3s;
+    -ms-transition: transform 0.3s;
+    -o-transition: transform 0.3s;
+    transition: transform 0.3s;
+}
+
+.button button {
+    position: relative;
+    width: 100%;
+    border: none;
+    border-radius: var(--RadiusSize);
+    padding: 15px var(--RadiusSize);
+    padding-right: 0px;
+    background-color: var(--ActivePrimary);
+
+    -webkit-transition: background-color 0.5s;
+    -moz-transition: background-color 0.5s;
+    -ms-transition: background-color 0.5s;
+    -o-transition: background-color 0.5s;
+    transition: background-color 0.5s;
+
+    font-size: 16px;
+    color: var(--LabelPrimary);
+
+    cursor: pointer;
+
+    outline: none;
+    filter: drop-shadow(5px 10px 5px rgba(0, 0, 0, 0.3));
+    z-index: 0 !important;
+}
+
+.button button:hover {
+    background-color: var(--ActiveSecondary);
+
+    filter: drop-shadow(3px 5px 3px rgba(0, 0, 0, 0.4));
+    box-sizing: border-box;
+}
+
+.button:hover {
+    transform: scale(0.97, 0.97);
+}
+
+.button.s_error button {
+    background-color: var(--ErrorDark);
+}
+
+.button.s_success button {
+    background-color: var(--SuccessDark);
+}
+
+.button.s_disabled {
+    pointer-events: none;
+}
+
+.button.s_disabled button {
+    background-color: var(--OffDisabled);
+    color: var(--Off);
+
+}
+
+.button .children {
+    position: absolute;
+    height: 100%;
+    top: 0;
+    right: var(--RadiusSize);
+    display: inline-flex;
+    flex-direction: row;
+    align-content: center;
+    align-items: center;
+    gap: 10px;
+    padding: 0px;
+}
+
+.button.active {
+    transform: scale(0.95, 0.95);
+}
+
+.button.active button {
+    filter: drop-shadow(3px 5px 3px rgba(0, 0, 0, 0.4)) !important;
+    box-sizing: border-box;
+}

@@ -1,0 +1,16 @@
+.button button {
+    background-color: var(--BackgroundSecondary);
+    color: var(--LabelSecondary);
+    border-top: 1px solid var(--LabelPrimary);
+    border-left: 1px solid var(--LabelPrimary);
+    border-right: 1px solid var(--LabelPrimary);
+    padding: 10px var(--RadiusSize);
+    padding-right: 50px;
+    font-size: 14px;
+}
+
+.button button:hover {
+    background-color: var(--BackgroundSecondary);
+    color: var(--LabelPrimary);
+}
+
