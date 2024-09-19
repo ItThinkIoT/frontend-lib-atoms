@@ -1,3 +1,5 @@
+import { setGlobalCSSVar } from "./css.js"
+
 interface Theme {
     DarkPrimary: string,
     ActivePrimary: string,
@@ -15,10 +17,6 @@ interface Theme {
     ErrorPrimary: string,
     ErrorDark: string,
     Highlight: string
-}
-
-export function getTheme(): Theme {
-    return DarkTheme
 }
 
 export const DarkTheme: Theme = {
@@ -48,7 +46,7 @@ export const LightTheme: Theme = {
     OffDisabled: "#d5bae54d",
     BackgroundPrimary: "#a3bfff",
     BackgroundSecondary: "#a6c5f7",
-    LabelPrimary: "#FFFFFF",
+    LabelPrimary: "#000000",
     LabelSecondary: "#767b93",
     LabelTertiary: "#bac2e8",
     ShadowPrimary: "#bc7bfa99",
@@ -60,4 +58,14 @@ export const LightTheme: Theme = {
 }
 
 
+export let __CurrentTheme : Theme = DarkTheme
+
+export function getTheme(): Theme {
+    return __CurrentTheme
+}
+
+export function setTheme(theme: Theme) {
+    __CurrentTheme = theme
+    setGlobalCSSVar(getTheme(), "theme")
+}
 
