@@ -72,6 +72,7 @@ export class Steps extends Atom<{ prop: IProp }> {
     }
 
     setCurrent(newCurrentIndex: IProp["currentIndex"]) {
+        this.isEnabled = true
         if (newCurrentIndex < 0) newCurrentIndex = 0
         if (newCurrentIndex >= this.steps.length) newCurrentIndex = this.steps.length - 1
         for (let i = 0; i < this.steps.length; i++) {
