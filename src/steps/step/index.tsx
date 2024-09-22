@@ -38,7 +38,7 @@ export class Step extends Atom<{ prop: IProp, sub: ISub }> {
     )
 
     onRender(): void {
-        console.log(`on render step`)
+        // console.log(`on render step`)
         this.setState(this.prop.state)
         this.setTitle(this.prop.title)
     }

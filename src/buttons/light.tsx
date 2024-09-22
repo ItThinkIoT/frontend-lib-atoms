@@ -7,7 +7,7 @@ export class LightButton extends Atom<{ prop: IProp<LightButton>, sub: {baseButt
     
     struct = () => (
         <div>
-            <SimpleButton sub={this.sub.baseButton} style={button}
+            <SimpleButton sub={this.sub.baseButton} class={[button]}
                 label={this.prop.label}
                 nucleus={this.prop.nucleus}
                 onClick={(this.prop.onClick) ? ()=>{this.prop.onClick(this)} : undefined}
@@ -16,4 +16,8 @@ export class LightButton extends Atom<{ prop: IProp<LightButton>, sub: {baseButt
             </SimpleButton>
         </div>
     )
+
+    onRender(): void {
+        console.log(`on render of Light  Button`)
+    }
 }

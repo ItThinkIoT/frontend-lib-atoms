@@ -13,7 +13,7 @@ export interface IProp<TButton> {
     label: string | HTMLElement,
     state?: SimpleButtonState,
     onClick?: (_this: TButton) => void
-    style?: string,
+    class?: Array<string>,
     active?: boolean
 }
 
@@ -28,12 +28,12 @@ export class SimpleButton extends Atom<{ prop: IProp<SimpleButton>, sub: ISub }>
 
     preRender: () => void = () => {
         if (this.prop.state === undefined) this.prop.state = SimpleButtonState.DEFAULT
-        if (this.prop.style === undefined) this.prop.style = ""
+        if (this.prop.class === undefined) this.prop.class = []
         if (this.prop.active === undefined) this.prop.active = false
     }
 
     struct: () => string = () => (
-        <div class={[button, this.prop.style]}>
+        <div class={[button, this.prop.class]}>
             <button sub={this.sub.button}>{this.prop.label}</button>
             <div nucleus class={children}></div>
         </div>

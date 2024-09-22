@@ -16,6 +16,8 @@ export class Steps extends Atom<{ prop: IProp }> {
 
     steps: Array<Step> = []
 
+    isEnabled = true
+
     preRender: () => void = () => {
         if (this.prop.titles == undefined) this.prop.titles = []
         if (this.prop.currentIndex == undefined) this.prop.currentIndex = 0
@@ -35,7 +37,7 @@ export class Steps extends Atom<{ prop: IProp }> {
         const newStepIndex = this.steps.push(step) - 1
         this.add(step)
         step.getElement().onclick = () => {
-            if (this.prop.onStepClick) this.prop.onStepClick(step, newStepIndex)
+            if (this.isEnabled && this.prop.onStepClick) this.prop.onStepClick(step, newStepIndex)
         }
         this.setCurrent((showIt) ? newStepIndex : this.prop.currentIndex)
     }
@@ -46,7 +48,7 @@ export class Steps extends Atom<{ prop: IProp }> {
     )
 
     onRender(): void {
-        console.log(`steps on render `)
+        // console.log(`steps on render `)
 
         for (const title of this.prop.titles) {
             this.addStep(new Step({ title }))
@@ -92,5 +94,12 @@ export class Steps extends Atom<{ prop: IProp }> {
     }
     previous() {
         this.setCurrent(this.prop.currentIndex - 1)
+    }
+
+    disable() {
+        this.isEnabled = false
+        for (let i = 0; i < this.steps.length; i++) {
+            this.steps[i].setState(StepState.USED)
+        }
     }
 }

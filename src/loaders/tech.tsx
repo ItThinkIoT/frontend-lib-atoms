@@ -4,8 +4,9 @@ import * as style from "./tech.atom.css"
 
 interface IProp {
     size?: number
-    zeroryColor?: string,
-    primaryColor?: string,
+    class?: Array<string>
+    zeroryColor?: string
+    primaryColor?: string
     secondaryColor?: string
 }
 
@@ -18,10 +19,11 @@ export class TechLoader extends Atom<{prop: IProp}> {
         if(!this.prop.zeroryColor) this.prop.zeroryColor = "#0FF"
         if(!this.prop.primaryColor) this.prop.primaryColor = "#0FF"
         if(!this.prop.secondaryColor) this.prop.secondaryColor = "#FF0"
+        if (this.prop.class === undefined) this.prop.class = []
     } 
 
     struct = () => (
-        <div class={style.svg_frame}>
+        <div class={[style.svg_frame, ...this.prop.class]}>
             <svg style="--i:0;--j:0;">
                 <g id="out1">
                     <path d="M72 172C72 116.772 116.772 72 172 72C227.228 72 272 116.772 272 172C272 227.228 227.228 272 172 272C116.772 272 72 227.228 72 172ZM197.322 172C197.322 158.015 185.985 146.678 172 146.678C158.015 146.678 146.678 158.015 146.678 172C146.678 185.985 158.015 197.322 172 197.322C185.985 197.322 197.322 185.985 197.322 172Z"></path>
