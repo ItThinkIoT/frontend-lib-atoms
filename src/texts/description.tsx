@@ -19,4 +19,12 @@ export class DescriptionText extends Atom<{ prop: IProp }> {
     struct = () => (
         <p class={[description, ...this.prop.class]} style={this.prop.style} nucleus></p>
     )
+
+    set text(text: string) {
+        this.nucleus.innerText = text
+    }
+
+    set html(html: string) {
+        this.nucleus.innerHTML = html
+    }
 }
