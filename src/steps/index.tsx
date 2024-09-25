@@ -9,6 +9,7 @@ interface IProp {
     titles?: Array<IPropStep["title"]>
     currentIndex?: number,
     onStepClick?: (step: Step, index: number) => void
+    parentWidth?: number
 }
 
 
@@ -21,6 +22,7 @@ export class Steps extends Atom<{ prop: IProp }> {
     preRender: () => void = () => {
         if (this.prop.titles == undefined) this.prop.titles = []
         if (this.prop.currentIndex == undefined) this.prop.currentIndex = 0
+        if (this.prop.parentWidth == undefined) this.prop.parentWidth = window.innerWidth
 
         if (!this.prop.classes) this.prop.classes = []
         if (typeof this.prop.classes == "string") this.prop.classes = this.prop.classes.split(" ")
@@ -64,6 +66,7 @@ export class Steps extends Atom<{ prop: IProp }> {
         window.addEventListener("resize", () => {
             this.setCurrent(this.prop.currentIndex)
         })
+        this.setCurrent(this.prop.currentIndex)
     }
     setCurrentKey(stepKey?: Step["prop"]["key"]) {
         const index = this.steps.findIndex(step => step.prop.key === stepKey)
@@ -80,7 +83,7 @@ export class Steps extends Atom<{ prop: IProp }> {
             if (i === newCurrentIndex) {
                 const stepWidth = this.steps[0].getElement().clientWidth
                 const stepMiddle = ((i) + 0.5) * stepWidth
-                const translateX = (window.innerWidth / 2) - this.getElement().offsetLeft - stepMiddle
+                const translateX = (this.prop.parentWidth / 2) - this.getElement().offsetLeft - stepMiddle
                 this.getElement().style.transform = `translateX(${translateX}px)`
             } else {
                 stepState = (i < newCurrentIndex) ? StepState.USED : StepState.USE
@@ -89,6 +92,13 @@ export class Steps extends Atom<{ prop: IProp }> {
             this.steps[i].setState(stepState)
         }
         this.prop.currentIndex = newCurrentIndex
+    }
+
+    setParent(element: HTMLElement) {
+        setTimeout(()=>{
+            this.prop.parentWidth = element.offsetWidth
+            this.setCurrent(this.prop.currentIndex)
+        }, 10)
     }
     next() {
         this.setCurrent(this.prop.currentIndex + 1)
