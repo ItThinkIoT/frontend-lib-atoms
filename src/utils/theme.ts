@@ -1,6 +1,7 @@
 import { setGlobalCSSVar } from "./css.js"
 
 interface Theme {
+    Pure: string,
     DarkPrimary: string,
     ActivePrimary: string,
     ActiveSecondary: string,
@@ -20,6 +21,7 @@ interface Theme {
 }
 
 export const DarkTheme: Theme = {
+    Pure: "#000",
     DarkPrimary: "#4B2A7B",
     ActivePrimary: "#A855F7",
     ActiveSecondary: "#9333EA",
@@ -39,6 +41,7 @@ export const DarkTheme: Theme = {
 }
 
 export const LightTheme: Theme = {
+    Pure: "#FFF",
     DarkPrimary: "#9956fe",
     ActivePrimary: "#A855F7",
     ActiveSecondary: "#9333EA",
