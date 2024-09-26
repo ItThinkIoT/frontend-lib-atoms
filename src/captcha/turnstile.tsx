@@ -6,6 +6,7 @@ interface ISub {
 
 interface IProp {
     /* https://developers.cloudflare.com/turnstile/get-started/client-side-rendering/#configurations */
+    id?: string,
     siteKey: string,
     onToken: (token: string) => void
     autoRender?: boolean
@@ -28,13 +29,19 @@ export class TurnstileCaptcha extends Atom<{ sub: ISub, prop: IProp }> {
         if (this.prop.theme === undefined) this.prop.theme = "auto"
         if (this.prop.size === undefined) this.prop.size = "normal"
 
-        const globalCallbackName = `onloadTurnstile_${this.id}_Callback`
-        /* Load script element */
-        const scriptElement = document.createElement("script")
-        scriptElement.setAttribute("src", `https://challenges.cloudflare.com/turnstile/v0/api.js?onload=${globalCallbackName}`)
-        document.head.appendChild(scriptElement)
+        if(this.prop.id === undefined) this.prop.id = this.id
 
-        window[globalCallbackName] = this.onWidgetLoaded.bind(this)
+        if(!document.querySelector(`script[data-id="${this.prop.id}"]`)) {
+            const globalCallbackName = `onloadTurnstile_${this.prop.id}_Callback`
+            /* Load script element */
+            const scriptElement = document.createElement("script")
+            scriptElement.setAttribute("src", `https://challenges.cloudflare.com/turnstile/v0/api.js?onload=${globalCallbackName}`)
+            scriptElement.setAttribute("data-id", `${this.prop.id}`)
+            document.head.appendChild(scriptElement)
+    
+            window[globalCallbackName] = this.onWidgetLoaded.bind(this)
+        }
+       
     }
 
     struct = () => (
