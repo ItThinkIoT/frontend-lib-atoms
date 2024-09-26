@@ -7,6 +7,7 @@ interface ISub {
 interface IProp {
     /* https://developers.cloudflare.com/turnstile/get-started/client-side-rendering/#configurations */
     id?: string,
+    useByPassToken?: string
     siteKey: string,
     onToken: (token: string) => void
     autoRender?: boolean
@@ -52,6 +53,13 @@ export class TurnstileCaptcha extends Atom<{ sub: ISub, prop: IProp }> {
 
     onRender(): void {
         // console.log('on render TurnstileCaptcha ')
+
+        /* ByPass */
+        if(this.prop.useByPassToken && this.prop.onToken) {
+            setTimeout(()=>{
+                this.prop.onToken(this.prop.useByPassToken)
+            }, 2000)
+        }
     }
 
     onWidgetLoaded() {
