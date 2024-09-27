@@ -60,7 +60,7 @@ export class PriceSlider extends Atom<{ sub: ISub, prop: IProp }> {
         if (this.prop.pipSufix === undefined) this.prop.pipSufix = false
         if (this.prop.mark === undefined) this.prop.mark = "."
         if (this.prop.decimal === undefined) this.prop.decimal = 2
-        if (this.prop.pipDecimal === undefined) this.prop.pipDecimal = this.prop.decimal
+        if (this.prop.pipDecimal === undefined) this.prop.pipDecimal = 0
         if (this.prop.priceAlign === undefined) this.prop.priceAlign = "center"
 
         if (this.prop.baseBarColor === undefined) this.prop.baseBarColor = "#FFF"
