@@ -15,18 +15,22 @@
     "start": "npm run build && ts-node ./scripts/web_server.ts"
   },
   "author": "Guihgo",
-  "keywords": ["itthink", "library", "frontend"],
+  "keywords": [
+    "itthink",
+    "library",
+    "frontend"
+  ],
   "license": "ISC",
   "dependencies": {
+    "@akamfoad/qrcode": "^0.3.2",
+    "nouislider": "^15.8.1"
   },
   "devDependencies": {
-    "@akamfoad/qrcode": "^0.3.2",
     "@types/express": "^4.17.20",
     "atomicreact-ts": "^0.1.36",
     "express": "^4.18.2",
     "tsx": "^4.7.2",
     "typescript": "^5.2.2",
-    "typescript-plugin-css-modules": "^5.0.2",
-    "nouislider": "^15.8.1"
+    "typescript-plugin-css-modules": "^5.0.2"
   }
 }
