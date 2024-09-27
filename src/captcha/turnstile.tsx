@@ -30,19 +30,19 @@ export class TurnstileCaptcha extends Atom<{ sub: ISub, prop: IProp }> {
         if (this.prop.theme === undefined) this.prop.theme = "auto"
         if (this.prop.size === undefined) this.prop.size = "normal"
 
-        if(this.prop.id === undefined) this.prop.id = this.id
+        if (this.prop.id === undefined) this.prop.id = this.id
 
-        if(!document.querySelector(`script[data-id="${this.prop.id}"]`)) {
+        if (!document.querySelector(`script[data-id="${this.prop.id}"]`)) {
             const globalCallbackName = `onloadTurnstile_${this.prop.id}_Callback`
             /* Load script element */
             const scriptElement = document.createElement("script")
             scriptElement.setAttribute("src", `https://challenges.cloudflare.com/turnstile/v0/api.js?onload=${globalCallbackName}`)
             scriptElement.setAttribute("data-id", `${this.prop.id}`)
             document.head.appendChild(scriptElement)
-    
+
             window[globalCallbackName] = this.onWidgetLoaded.bind(this)
         }
-       
+
     }
 
     struct = () => (
@@ -55,8 +55,8 @@ export class TurnstileCaptcha extends Atom<{ sub: ISub, prop: IProp }> {
         // console.log('on render TurnstileCaptcha ')
 
         /* ByPass */
-        if(this.prop.useByPassToken && this.prop.onToken) {
-            setTimeout(()=>{
+        if (this.prop.useByPassToken && this.prop.onToken) {
+            setTimeout(() => {
                 this.prop.onToken(this.prop.useByPassToken)
             }, 2000)
         }
@@ -96,6 +96,8 @@ export class TurnstileCaptcha extends Atom<{ sub: ISub, prop: IProp }> {
     }
 
     get token() {
+        if (this.prop.useByPassToken !== undefined) return this.prop.useByPassToken
+        
         if (!this.widgetID) {
             this.renderWidget()
             return null
@@ -105,7 +107,7 @@ export class TurnstileCaptcha extends Atom<{ sub: ISub, prop: IProp }> {
             this.resetWidget()
             return null
         }
-        
+
         return this.GLOBAL_VAR.getResponse(this.widgetID)
     }
 }
