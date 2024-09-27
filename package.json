@@ -1,6 +1,6 @@
 {
   "name": "@itthink/frontend-lib-atoms",
-  "version": "1.0.1",
+  "version": "1.1.1",
   "description": "ItThink Atoms Library",
   "type": "module",
   "exports": {
