@@ -1,16 +1,15 @@
 .button button {
-    background-color: var(--BackgroundSecondary);
-    color: var(--LabelSecondary);
-    border-top: 1px solid var(--LabelPrimary);
-    border-left: 1px solid var(--LabelPrimary);
-    border-right: 1px solid var(--LabelPrimary);
-    padding: 10px var(--RadiusSize);
-    padding-right: 50px;
-    font-size: 14px;
+    background-color: var(--BackgroundSecondary) !important;
+    color: var(--LabelSecondary) !important;
+    border-top: 1px solid var(--LabelPrimary) !important;
+    border-left: 1px solid var(--LabelPrimary) !important;
+    border-right: 1px solid var(--LabelPrimary) !important;
+    padding: 10px var(--RadiusSize) !important;
+    padding-right: 50px !important;
+    font-size: 14px !important;
 }
 
 .button button:hover {
     background-color: var(--BackgroundSecondary);
     color: var(--LabelPrimary);
 }
-

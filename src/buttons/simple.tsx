@@ -1,6 +1,6 @@
 import { Atom } from "atomicreact-ts"
 
-import { button, s_error, s_success, s_disabled, children, active } from "./simple.atom.css"
+import { button, s_error, s_success, s_disabled, nucleus, active, start } from "./simple.atom.css"
 
 export enum SimpleButtonState {
     DEFAULT,
@@ -15,6 +15,7 @@ export interface IProp<TButton> {
     onClick?: (_this: TButton) => void
     class?: Array<string>,
     active?: boolean
+    nucleusAlign?: "start" | "end"
 }
 
 interface ISub {
@@ -30,12 +31,13 @@ export class SimpleButton extends Atom<{ prop: IProp<SimpleButton>, sub: ISub }>
         if (this.prop.state === undefined) this.prop.state = SimpleButtonState.DEFAULT
         if (this.prop.class === undefined) this.prop.class = []
         if (this.prop.active === undefined) this.prop.active = false
+        if(this.prop.nucleusAlign === undefined) this.prop.nucleusAlign = "end"
     }
 
     struct: () => string = () => (
         <div class={[button, this.prop.class]}>
             <button sub={this.sub.button}>{this.prop.label}</button>
-            <div nucleus class={children}></div>
+            <div nucleus class={nucleus}></div>
         </div>
     )
 
@@ -58,6 +60,12 @@ export class SimpleButton extends Atom<{ prop: IProp<SimpleButton>, sub: ISub }>
         if (this.nucleus.children.length === 0) return
         const maxNucleusChildHeight = (Array.prototype.reduce.call(this.nucleus.children, (prev: HTMLElement, current: HTMLElement) => ((current.clientHeight > prev.clientHeight) ? current : prev)) as HTMLElement).clientHeight
         this.sub.button.style.minHeight = `${Math.max(this.sub.button.clientHeight, maxNucleusChildHeight + 10)}px`
+
+        if(this.prop.nucleusAlign === "start") {
+            this.nucleus.classList.add(start)
+        } else {
+            this.nucleus.classList.remove(start)
+        }
     }
 
     setState(state: SimpleButtonState) {

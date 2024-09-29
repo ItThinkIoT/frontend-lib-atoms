@@ -1,7 +1,7 @@
 .button {
     width: 100%;
     position: relative;
-    --RadiusSize: 20px;
+    --RadiusSize: 10px;
     white-space: normal;
     word-wrap: break-word;
     -webkit-transition: transform 0.3s;
@@ -65,17 +65,23 @@
 
 }
 
-.button .children {
+.button .nucleus {
     position: absolute;
     height: 100%;
+    max-height: max-content;
     top: 0;
     right: var(--RadiusSize);
+    left: none;
     display: inline-flex;
     flex-direction: row;
     align-content: center;
     align-items: center;
     gap: 10px;
     padding: 0px;
+}
+.button .nucleus.start {
+    right: auto;
+    left: var(--RadiusSize);
 }
 
 .button.active {

@@ -1,3 +1,8 @@
+.atom {
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
 .price {
     --fontSize: 30px;
     width: 100%;
@@ -8,17 +13,20 @@
     font-weight: normal;
 }
 
-.price span:first-of-type {
-    padding-left: 8px;
+.price .prefix {
+    
+}
+.price .int {
+    padding-left: 4px;
 }
 
-.price span:nth-of-type(2) {
-    padding-right: 0px;
+.price .dec {
+    padding-right: 12px;
     font-size: calc(var(--fontSize) *0.8);
     font-style: italic;
 }
 
-.price span:nth-of-type(3) {
+.price .sufix {
     width: max-content;
 }
 
@@ -33,8 +41,19 @@
     cursor: pointer;
 }
 
+.slider .noUi-base.disabled {
+    cursor: not-allowed;
+}
+
 .slider .noUi-touch-area {
     cursor: w-resize;
+}
+
+.slider .noUi-marker {
+    /* opacity: 0.3; */
+    display: none !important;
+    width: 1px !important;
+    height: 8px !important;
 }
 
 .slider .noUi-connects, .slider.noUi-horizontal .noUi-handle {
@@ -48,6 +67,7 @@
             100% 0,
             /* Bottom & Right */
             calc(100% - var(--curve-size)) 100%);
+    transition: all ease-in 0.2s;
 }
 
 .slider.noUi-target {
@@ -84,6 +104,7 @@
 .slider .noUi-handle:after {
     left: 10px !important;
 }
+
 /* Copied from node_modules/nouislider/dist/nouislider.css */
 
 /* Functional styling;

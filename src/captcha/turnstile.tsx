@@ -1,4 +1,4 @@
-import { AtomicReact, Atom } from "atomicreact-ts"
+import { Atom } from "atomicreact-ts"
 
 interface ISub {
     widgetElement: HTMLDivElement

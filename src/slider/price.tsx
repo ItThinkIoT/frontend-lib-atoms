@@ -1,21 +1,24 @@
 import { Atom } from "atomicreact-ts"
 
 /* Docs: https://refreshless.com/nouislider/ */
-import { API, create, PipsMode } from "nouislider"
+import { API, create, PipsMode, Options } from "nouislider"
 
 import * as style from "./slider.atom.css"
 import { fromNumberToString, truncateFixedAmount } from "utils/currency.js"
+import { getTheme } from "utils/theme.js"
 
 interface ISub {
     slider: HTMLDivElement,
     price: HTMLHeadingElement
+    prefix: HTMLSpanElement
     valueInt: HTMLSpanElement
     valueDec: HTMLSpanElement
+    sufix: HTMLSpanElement
 }
 
 interface IProp {
-    min: number,
-    max: number,
+    min?: number,
+    max?: number,
     step?: number,
     pipStep?: number,
     pipHideFirstLast?: boolean
@@ -31,8 +34,10 @@ interface IProp {
     priceAlign?: "center" | "start" | "end"
     baseBarColor?: string
     activeBarColor?: string
-    onChange?: (number: number) => void
-    onUpdate?: (number: number) => boolean | void
+    enabled?: boolean
+    onEnd?: (number: number, _this: PriceSlider) => void
+    onChange?: (number: number, _this: PriceSlider, ) => void
+    onUpdate?: (number: number, _this: PriceSlider) => boolean | void
 }
 
 export class PriceSlider extends Atom<{ sub: ISub, prop: IProp }> {
@@ -44,6 +49,8 @@ export class PriceSlider extends Atom<{ sub: ISub, prop: IProp }> {
     public prefixStyle: string
 
     preRender = () => {
+        if (this.prop.min === undefined) this.prop.min = 0
+        if (this.prop.max === undefined) this.prop.max = 0
         if (this.prop.step === undefined) this.prop.step = Math.abs(this.prop.max - this.prop.min) / 10
         if (this.prop.pipStep === undefined) this.prop.pipStep = this.prop.step
         if (this.prop.pipHideFirstLast === undefined) this.prop.pipHideFirstLast = false
@@ -59,46 +66,48 @@ export class PriceSlider extends Atom<{ sub: ISub, prop: IProp }> {
         if (this.prop.sufix === undefined) this.prop.sufix = ""
         if (this.prop.pipSufix === undefined) this.prop.pipSufix = false
         if (this.prop.mark === undefined) this.prop.mark = "."
+        if (this.prop.class === undefined) this.prop.class = []
         if (this.prop.decimal === undefined) this.prop.decimal = 2
         if (this.prop.pipDecimal === undefined) this.prop.pipDecimal = 0
         if (this.prop.priceAlign === undefined) this.prop.priceAlign = "center"
 
         if (this.prop.baseBarColor === undefined) this.prop.baseBarColor = "#FFF"
         if (this.prop.activeBarColor === undefined) this.prop.activeBarColor = "#FFF"
+        if (this.prop.enabled === undefined) this.prop.enabled = true
 
         this.prop.start = this.validValue(this.prop.start)
         this._value = this.prop.start
     }
 
     struct = () => (
-        <div class={this.prop.class}>
+        <div class={[...this.prop.class, style.atom]}>
             <h2 sub={this.sub.price} class={style.price} style={`text-align: ${this.prop.priceAlign}`}>
-                {this.prop.prefix}
-                <span sub={this.sub.valueInt}></span>
-                <span sub={this.sub.valueDec}></span>
-                <span>{this.prop.sufix}</span>
+                <span sub={this.sub.prefix} class={style.prefix}>{this.prop.prefix}</span>
+                <span sub={this.sub.valueInt} class={style.int}></span>
+                <span sub={this.sub.valueDec} class={style.dec}></span>
+                <span sub={this.sub.sufix} class={style.sufix}>{this.prop.sufix}</span>
             </h2>
             <div class={style.slider} sub={this.sub.slider}></div>
         </div>
     )
 
-
-    onRender(): void {
-        this.prefixStyle = `${style.slider.split("_")[0]}_noUi-`
-
-        this.slider = create(this.sub.slider, {
+    getSliderOptions(): Options {
+        return {
             cssPrefix: this.prefixStyle,
             start: [this.prop.start],
             connect: [true, false],
+            step: this.prop.step,
             range: {
                 'min': [this.prop.min],
                 'max': [this.prop.max]
             },
             pips: {
                 mode: PipsMode.Values,
-                values: Array.from({ length: (Math.abs((this.prop.max - this.prop.min)) / (this.prop.pipStep)) + 1 }, (_, i) => {
+                values: Array.from({ length: Math.ceil(Math.abs((this.prop.max - this.prop.min)) / (this.prop.pipStep)) + 1 }, (_, i) => {
                     if (this.prop.pipHideFirstLast && (i == 0 || i == ((this.prop.max - this.prop.min) / (this.prop.pipStep)))) return null
-                    return (this.prop.min + (i * this.prop.pipStep))
+                    let valuePipStep = (this.prop.min + (i * this.prop.pipStep))
+                    if (valuePipStep > this.prop.max) valuePipStep = this.prop.max
+                    return valuePipStep
                 }).filter((n) => (n !== null)),//[20, 30, 40, 50, 60, 70, 80],
                 format: {
                     to: (n) => {
@@ -107,28 +116,36 @@ export class PriceSlider extends Atom<{ sub: ISub, prop: IProp }> {
                 },
                 density: (this.prop.max > this.prop.min) ? this.prop.pipStep * 2 : this.prop.pipStep / 2
             }
-        })
+        }
+    }
+    onRender(): void {
+        this.prefixStyle = `${style.slider.split("_")[0]}_noUi-`
 
-        this.slider.on("change", (values, indexHandler) => {
-            // this.value = Number(values[indexHandler])
-            if (this.prop.onChange) {
-                this.prop.onChange(this.value)
-            }
-            // this.slider.set(this.value)
+        this.slider = create(this.sub.slider, this.getSliderOptions())
+
+        // this.slider.on("change", (values, indexHandler) => {
+        //     // const value = this.validValue(Number(values[indexHandler]))
+        //     // console.log(value, this.value)
+        //     // if (value === this.value) return
+        //     // this.onChange()
+        // })
+        this.slider.on("set", (values, indexHandler)=>{
+            if(this.prop.onEnd) this.prop.onEnd(this.value, this)
         })
         this.slider.on("update", (values, indexHandler) => {
-            // const value = Number(values[indexHandler])
-            // if(value === this.value) return 
             this.value = Number(values[indexHandler])
         })
 
+        /* Styling slider */
+        this.getSliderElement("connects").style.backgroundColor = this.prop.baseBarColor
+        this.getSliderElement("connect").style.backgroundColor = this.prop.activeBarColor
 
         /* Mouse Wheel  */
         const onWheelMouse = (event: WheelEvent) => {
             if (event.deltaY < 0) {
-                this.prev()
-            } else if (event.deltaY > 0) {
                 this.next()
+            } else if (event.deltaY > 0) {
+                this.prev()
             }
             event.preventDefault()
         }
@@ -139,11 +156,7 @@ export class PriceSlider extends Atom<{ sub: ISub, prop: IProp }> {
             window.removeEventListener('wheel', onWheelMouse);
         })
 
-
-        /* Styling slider */
-        this.getSliderElement("connects").style.backgroundColor = this.prop.baseBarColor
-        this.getSliderElement("connect").style.backgroundColor = this.prop.activeBarColor
-
+        this.updateStyles()
         this.slider.set(this.prop.start)
     }
 
@@ -160,12 +173,16 @@ export class PriceSlider extends Atom<{ sub: ISub, prop: IProp }> {
 
         let mustContinue = true
         if (this.prop.onUpdate) {
-            mustContinue = this.prop.onUpdate(newValue) as boolean ?? true
+            mustContinue = this.prop.onUpdate(newValue, this) as boolean ?? true
         }
 
         if (!mustContinue) {
-            // this.slider.set(this.value)
+            if (this.value !== newValue) this.set(this.value)
             return
+        }
+
+        if (this.prop.onChange && this.value !== newValue) {
+            this.prop.onChange(newValue, this)
         }
 
         this._value = newValue
@@ -193,16 +210,53 @@ export class PriceSlider extends Atom<{ sub: ISub, prop: IProp }> {
     next() {
         const prev = (Math.floor(((this.value - this.prop.min) / this.prop.step)) * this.prop.step) + this.prop.min
         const next = prev + this.prop.step
-        this.value = next
+        this.set(next)
     }
     /* Back to previus step value */
     prev() {
         const prev = (Math.floor((((this.value - 0.000001) - this.prop.min) / this.prop.step)) * this.prop.step) + this.prop.min
-        this.value = prev
+        this.set(prev)
+    }
+    set(value: number) {
+        if (!this.prop.enabled) return
+        this.slider.set(value, false)
     }
 
     getSliderElement(className: string): HTMLElement {
         return this.sub.slider.querySelector(`.${this.prefixStyle}${className}`)
+    }
+
+    reRender() {
+        this.preRender()
+        this.sub.prefix.innerText = this.prop.prefix
+        this.sub.sufix.innerText = this.prop.sufix
+        this.slider.updateOptions(this.getSliderOptions(), false)
+        this.updateStyles()
+        this.slider.set(this.prop.start)
+    }
+
+    updateStyles(baseColor = this.prop.baseBarColor, activeBarColor = this.prop.activeBarColor) {
+        if (!this.prop.enabled) {
+            baseColor = getTheme().OffDisabled
+            activeBarColor = getTheme().Off
+            this.slider.disable()
+            this.getSliderElement("base").classList.add(style.disabled)
+        } else {
+            this.slider.enable()
+            this.getSliderElement("base").classList.remove(style.disabled)
+        }
+
+        /* Styling slider */
+        this.getSliderElement("connects").style.backgroundColor = baseColor
+        this.getSliderElement("connect").style.backgroundColor = activeBarColor
+        this.getSliderElement("handle").style.backgroundColor = activeBarColor
+        // this.getSliderElement("value").style.border = "1px solid yellow"
+
+    }
+
+    toggle(enable?: boolean) {
+        this.prop.enabled = (enable !== undefined) ? enable : !this.prop.enabled
+        this.updateStyles()
     }
 
 }

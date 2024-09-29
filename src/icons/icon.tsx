@@ -17,17 +17,15 @@ export class Icon extends Atom<{
     _height: string
 
     preRender = () => {
-        if (!this.prop.width) {
-            if (this.prop.height) {
-                this._height = `${this.prop.height}px`
-            } else {
-                this._width = "25px"
-                this._height = "auto"
-            }
-            this._width = "auto"
-        } else {
-            this._width = `${this.prop.width}px`
-            this._height = "auto"
+
+        if (!this.prop.width) this._width = "auto"
+        else this._width = `${this.prop.width}px`
+
+        if (!this.prop.height) this._height = "auto"
+        else this._height = `${this.prop.height}px`
+
+        if (this._width == "auto" && this._height == "auto") {
+            this._height = `32px`
         }
 
         if (!this.prop.color) this.prop.color = DarkTheme.LabelSecondary
