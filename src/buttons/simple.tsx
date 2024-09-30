@@ -12,7 +12,7 @@ export enum SimpleButtonState {
 export interface IProp<TButton> {
     label: string | HTMLElement,
     state?: SimpleButtonState,
-    onClick?: (_this: TButton) => void
+    onClick?: (_this: TButton | SimpleButton) => void
     class?: Array<string>,
     active?: boolean
     nucleusAlign?: "start" | "end"
@@ -23,7 +23,7 @@ interface ISub {
 }
 
 
-export class SimpleButton extends Atom<{ prop: IProp<SimpleButton>, sub: ISub }> {
+export class SimpleButton<TSimpleButton = SimpleButton<any>> extends Atom<{ prop: IProp<TSimpleButton>, sub: ISub }> {
 
     private states = [s_error, s_success, s_disabled]
 
@@ -35,7 +35,7 @@ export class SimpleButton extends Atom<{ prop: IProp<SimpleButton>, sub: ISub }>
     }
 
     struct: () => string = () => (
-        <div class={[button, this.prop.class]}>
+        <div class={[button, ...this.prop.class]}>
             <button sub={this.sub.button}>{this.prop.label}</button>
             <div nucleus class={nucleus}></div>
         </div>

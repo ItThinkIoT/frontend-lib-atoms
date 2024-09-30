@@ -7,7 +7,7 @@ import { gradientBorder, withRotation, floatingZ } from "../utils/animations.ato
 import { QRCodeSVG } from "@akamfoad/qrcode"
 
 interface IProp {
-    value: string,
+    value?: string,
     bgColor?: string,
     fgColor?: string,
     glowColorOne?: string,

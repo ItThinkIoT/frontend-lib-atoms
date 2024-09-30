@@ -58,7 +58,7 @@ export class TurnstileCaptcha extends Atom<{ sub: ISub, prop: IProp }> {
         if (this.prop.useByPassToken && this.prop.onToken) {
             setTimeout(() => {
                 this.prop.onToken(this.prop.useByPassToken)
-            }, 2000)
+            }, 1000)
         }
     }
 
