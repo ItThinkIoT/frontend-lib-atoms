@@ -45,7 +45,7 @@ export class PyramidLoader extends Atom<{ prop: IProp }> {
     setSize() {
         this.getElement().style.width = `${this.prop.size}px`
         this.getElement().style.height = `${this.prop.size}px`
-        this.getElement().style.scale = `${((this.prop.size-30)/this.DEFAULT_SIZE)}`
+        this.getElement().style.scale = `${((this.prop.size)/this.DEFAULT_SIZE)}`
     }
 
 }

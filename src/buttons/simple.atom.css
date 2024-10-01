@@ -69,7 +69,8 @@
     position: absolute;
     height: 100%;
     max-height: max-content;
-    top: 0;
+    top: 50%;
+    transform: translateY(-50%);
     right: var(--RadiusSize);
     left: none;
     display: inline-flex;
