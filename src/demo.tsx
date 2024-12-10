@@ -4,7 +4,7 @@ import { AtomicReact, Atom } from "atomicreact-ts"
 
 import { demo, panel, widget } from "./demo.atom.css"
 import { setGlobalCSSVar } from "./utils/css.js"
-import { getTheme } from "./utils/theme.js"
+import { getTheme } from "./theme/index.js"
 
 import { SimpleButton } from "buttons/simple.jsx"
 import { LightButton } from "buttons/light.jsx"

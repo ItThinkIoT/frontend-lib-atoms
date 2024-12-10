@@ -7,7 +7,7 @@ export class LightButton extends Atom<{ prop: IProp<LightButton>, sub: { baseBut
 
     struct = () => (
         <div>
-            <SimpleButton sub={this.sub.baseButton} class={[button, ...this.prop.class]}
+            <SimpleButton sub={this.sub.baseButton} class={[button, ...this.prop.class??[]]}
                 label={this.prop.label}
                 nucleus={this.prop.nucleus}
                 onClick={(this.prop.onClick) ? () => { this.prop.onClick(this) } : undefined}
