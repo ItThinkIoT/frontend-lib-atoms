@@ -75,6 +75,7 @@
     appearance: none;
     color: var(--LabelSecondary);
     padding: 0 6px;
+    border: 1px solid var(--DarkPrimary);
 }
 
 /* Chrome, Safari, Edge, Opera */
