@@ -20,7 +20,7 @@ export interface Theme {
     Highlight: string
 }
 
-export let __CurrentTheme : Theme
+export let __CurrentTheme: Theme
 
 export function getTheme(): Theme {
     return __CurrentTheme
@@ -29,5 +29,13 @@ export function getTheme(): Theme {
 export function setTheme(theme: Theme) {
     __CurrentTheme = theme
     setGlobalCSSVar(getTheme(), "theme")
+    window.dispatchEvent(new Event("onThemeChanged"))
 }
 
+export function onThemeChanged(callback = () => { }, { once }: { once: boolean } = { once: false }) {
+    const onThemeChanged = () => {
+        if (once) window.removeEventListener("onThemeChanged", onThemeChanged)
+        callback()
+    }
+    window.addEventListener("onThemeChanged", onThemeChanged)
+}
