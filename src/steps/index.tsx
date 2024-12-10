@@ -95,7 +95,7 @@ export class Steps extends Atom<{ prop: IProp }> {
     }
 
     setParent(element: HTMLElement) {
-        setTimeout(()=>{
+        setTimeout(() => {
             this.prop.parentWidth = element.offsetWidth
             this.setCurrent(this.prop.currentIndex)
         }, 10)
