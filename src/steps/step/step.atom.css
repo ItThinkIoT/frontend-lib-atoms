@@ -39,7 +39,7 @@
 .step.using {
     filter: drop-shadow(3px 5px 3px rgba(0, 0, 0, 0.3));
     z-index: 1;
-    color: var(--ActivePrimary);
+    color: var(--LabelPrimary);
 }
 
 .step.using .bar {
