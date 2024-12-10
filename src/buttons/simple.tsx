@@ -10,7 +10,7 @@ export enum SimpleButtonState {
 }
 
 export interface IProp<TButton> {
-    label: string | HTMLElement,
+    label?: string | HTMLElement,
     state?: SimpleButtonState,
     onClick?: (_this: TButton | SimpleButton) => void
     class?: Array<string>,
@@ -36,7 +36,7 @@ export class SimpleButton<TSimpleButton = SimpleButton<any>> extends Atom<{ prop
 
     struct: () => string = () => (
         <div class={[button, ...this.prop.class]}>
-            <button sub={this.sub.button}>{this.prop.label}</button>
+            <button sub={this.sub.button}>{this.prop.label??""}</button>
             <div nucleus class={nucleus}></div>
         </div>
     )

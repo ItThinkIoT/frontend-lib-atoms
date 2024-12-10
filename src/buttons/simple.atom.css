@@ -79,6 +79,7 @@
     align-items: center;
     gap: 10px;
     padding: 0px;
+    cursor: pointer;
 }
 .button .nucleus.start {
     right: auto;
