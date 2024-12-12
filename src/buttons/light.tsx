@@ -18,7 +18,6 @@ export class LightButton extends Atom<{ prop: IProp<LightButton>, sub: { baseBut
     )
 
     onRender(): void {
-        console.log(`on render of Light  Button`)
     }
 
     set onClick(callback: IProp<LightButton>["onClick"]) {
