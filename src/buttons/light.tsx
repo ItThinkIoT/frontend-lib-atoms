@@ -12,6 +12,8 @@ export class LightButton extends Atom<{ prop: IProp<LightButton>, sub: { baseBut
                 nucleus={this.prop.nucleus}
                 onClick={(this.prop.onClick) ? () => { this.prop.onClick(this) } : undefined}
                 state={this.prop.state}
+                active={this.prop.active}
+                nucleusAlign={this.prop.nucleusAlign}
             >
             </SimpleButton>
         </div>
