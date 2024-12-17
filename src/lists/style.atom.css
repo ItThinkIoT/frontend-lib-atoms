@@ -1,0 +1,95 @@
+.list {
+    position: relative;
+}
+
+.list [a-n] {
+    padding-left: 0;
+}
+
+.item {
+    position: relative;
+    list-style-type: none;
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    margin-top: 8px;
+    border: 1px solid var(--Off);
+    padding: 10px;
+}
+
+.detail {
+    width: -webkit-fill-available;
+}
+
+.detail p {
+    padding-inline-start: 5px;
+}
+
+.input {
+    position: relative;
+    margin: auto;
+}
+
+.option {
+    --color: var(--Off);
+    display: block;
+    width: 24px;
+    height: 24px;
+    box-shadow: 0 20px 20px rgba(0, 0, 0, 0.2), inset 0 5px 3px rgba(0, 0, 0, 0.2),
+        inset 0 0 0 3px var(--color);
+    border-radius: 50%;
+    margin-bottom: 24px;
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.5, 0, 0.5, 2);
+}
+
+.item.active {
+    background-color: var(--BackgroundPrimary);
+    border: 1px solid var(--ActivePrimary);
+}
+.item.active .detail label {
+    font-weight: bold;
+}
+.item.active .option {
+    transform: scale(1.2);
+    --color: var(--ActivePrimary);
+    transition-delay: 0.4s;
+}
+
+.indicator {
+    opacity: 0;
+}
+
+.indicator div {
+    position: absolute;
+    z-index: 1;
+    width: 12px;
+    height: 12px;
+    top: 6px;
+    left: 6px;
+    transition: all 0.4s cubic-bezier(0.45, 0.05, 0.55, 0.95);
+    transition-delay: calc(1s * var(--delay));
+    --offset: 69px;
+}
+
+.indicator div {
+    transform: translateY(0px);
+}
+
+#two:checked~.indicator div {
+    transform: translateY(48px);
+}
+
+#three:checked~.indicator div {
+    transform: translateY(96px);
+}
+
+.indicator div::before {
+    position: absolute;
+    content: "";
+    width: 100%;
+    height: 100%;
+    background: var(--color);
+    border-radius: 50%;
+    --color: var(--ActivePrimary);
+}

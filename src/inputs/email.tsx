@@ -15,6 +15,7 @@ export class InputEmail extends Atom<{ prop: IProp, sub: ISub }> {
         <div>
             <Input
                 sub={this.sub.input}
+                class={this.prop.class}
                 label={this.prop.label}
                 state={this.prop.state}
                 type="email"

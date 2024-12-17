@@ -26,7 +26,8 @@ export interface IInputProp {
     type?: HTMLInputTypeAttribute,
     mask?: string,
     placeholder?: string,
-    mode?: HTMLInputModeAttribute
+    mode?: HTMLInputModeAttribute,
+    class?: string[]
 }
 
 interface ISub {
@@ -43,10 +44,11 @@ export class Input extends Atom<{ prop: IInputProp, sub: ISub }> {
         if (this.prop.state == undefined) this.prop.state = InputState.default
         if (this.prop.value == undefined) this.prop.value = ""
         if (this.prop.type == undefined) this.prop.type = "text"
+        this.prop.class ??= []
     }
 
     struct: () => string = () => (
-        <div class={input}>
+        <div class={[input, ...this.prop.class]}>
             <label htmlFor={`${this.id}_input`}>{this.prop.label}</label>
             <input
                 sub={this.sub.input}
