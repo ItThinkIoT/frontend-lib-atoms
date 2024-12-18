@@ -15,7 +15,8 @@ export interface Item {
 
 interface IProp {
     selection?: SelectionType,
-    items?: Array<Item>
+    items?: Array<Item>,
+    onChange?: (item: ItemAtom) => void
 }
 
 export class BoxedList extends Atom<{ prop: IProp, sub: { indicator: HTMLDivElement } }> {
@@ -25,29 +26,6 @@ export class BoxedList extends Atom<{ prop: IProp, sub: { indicator: HTMLDivElem
     preRender: () => void = () => {
         this.prop.selection ??= SelectionType.OPTION
         this.prop.items ??= []
-
-        // this.items = this.prop.items.map(i => (<ItemAtom active={false} selection={this.prop.selection} {...i}
-        //     onClick={(item) => {
-        //         console.log(item, this.items)
-        //         if (this.prop.selection === SelectionType.OPTION) {
-        //             //desactive all 
-        //             for (const i of this.items) {
-        //                 if (!i.prop.active) continue
-        //                 i.prop.active = false
-        //                 i.sub.input.classList.remove(style.active)
-        //             }
-        //             item.prop.active = true
-        //         } else if (this.prop.selection === SelectionType.MULTIPLE) {
-        //             //toggle active
-        //             item.prop.active = !item.prop.active
-        //             return
-        //         }
-
-        //         if (item.prop.active) item.sub.input.classList.add(style.active)
-        //         else item.sub.input.classList.remove(style.active)
-
-        //     }}></ItemAtom>
-        // ))
     }
     struct: () => string = () => (
         <div class={[style.list]}>
@@ -68,8 +46,8 @@ export class BoxedList extends Atom<{ prop: IProp, sub: { indicator: HTMLDivElem
 
         //Indicator dots
         let divs = "";
-        for (let i = 0; i < 30; i++) {
-            let delay = 0.004 * i;
+        for (let i = 0; i < 60; i++) {
+            let delay = 0.002 * i;
             divs += `<div style="--delay: ${delay.toFixed(3)}"></div>`;
         }
         this.sub.indicator.innerHTML = divs
@@ -85,7 +63,7 @@ export class BoxedList extends Atom<{ prop: IProp, sub: { indicator: HTMLDivElem
 
     selectItem(item: ItemAtom) {
         if (this.prop.selection === SelectionType.OPTION) {
-            if(item.prop.active) return
+            if (item.prop.active) return
             this.sub.indicator.style.opacity = "1"
             //desactive all
             for (const i of this.items) {
@@ -95,19 +73,18 @@ export class BoxedList extends Atom<{ prop: IProp, sub: { indicator: HTMLDivElem
             item.active()
             this.moveIndicator(item)
 
-            return
-        }
-
-        if (this.prop.selection === SelectionType.MULTIPLE) {
+        } else if (this.prop.selection === SelectionType.MULTIPLE) {
             //toggle active
             if (item.prop.active) item.desactive()
             else item.active()
-
-            return
         }
 
+        if (this.prop.onChange) this.prop.onChange(item)
     }
 
+    getActives(): Array<Item["key"]> {
+        return this.items.filter((i) => (i.prop.active === true)).map(i => (i.prop.key))
+    }
 }
 
 
@@ -122,7 +99,7 @@ class ItemAtom extends Atom<{
     struct: () => string = () => (
         <li class={style.item}>
             <div class={style.input}>
-                <div sub={this.sub.input} class={style.option}></div>
+                <div sub={this.sub.input} class={(this.prop.selection === SelectionType.OPTION) ? style.option : style.multiple}></div>
             </div>
             <div class={style.detail}>
                 <label>{this.prop.title ?? this.prop.key}</label>
