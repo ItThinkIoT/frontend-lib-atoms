@@ -81,6 +81,7 @@
     padding: 0px;
     cursor: pointer;
 }
+
 .button .nucleus.start {
     right: auto;
     left: var(--RadiusSize);
@@ -93,4 +94,12 @@
 .button.active button {
     filter: drop-shadow(3px 5px 3px rgba(0, 0, 0, 0.4)) !important;
     box-sizing: border-box;
+}
+
+.hide {
+    display: none !important;
+}
+
+.show {
+    display: inline-block !important;
 }

@@ -1,6 +1,7 @@
 import { Atom } from "atomicreact-ts"
 
-import { button, s_error, s_success, s_disabled, nucleus, active, start } from "./simple.atom.css"
+import { CircleLoader } from "../loaders/circle.jsx"
+import { button, s_error, s_success, s_disabled, nucleus, active, start, show, hide } from "./simple.atom.css"
 
 export enum SimpleButtonState {
     DEFAULT,
@@ -20,6 +21,8 @@ export interface IProp<TButton> {
 
 interface ISub {
     button: HTMLButtonElement
+    label: HTMLSpanElement
+    loading: HTMLSpanElement
 }
 
 
@@ -30,13 +33,16 @@ export class SimpleButton<TSimpleButton = SimpleButton<any>> extends Atom<{ prop
     preRender: () => void = () => {
         if (this.prop.state === undefined) this.prop.state = SimpleButtonState.DEFAULT
         if (this.prop.class === undefined) this.prop.class = []
-        if (this.prop.active === undefined) this.prop.active = false
-        if(this.prop.nucleusAlign === undefined) this.prop.nucleusAlign = "end"
+        if (this.prop.active === undefined) this.prop.active = true
+        if (this.prop.nucleusAlign === undefined) this.prop.nucleusAlign = "end"
     }
 
     struct: () => string = () => (
         <div class={[button, ...this.prop.class]}>
-            <button sub={this.sub.button}>{this.prop.label??""}</button>
+            <button sub={this.sub.button}>
+                <span class={show} sub={this.sub.label}>{this.prop.label ?? ""}</span>
+                <span sub={this.sub.loading} class={hide}><CircleLoader size={14}></CircleLoader></span>
+            </button>
             <div nucleus class={nucleus}></div>
         </div>
     )
@@ -47,7 +53,7 @@ export class SimpleButton<TSimpleButton = SimpleButton<any>> extends Atom<{ prop
 
         this.getElement().onclick = (mouseEvent) => {
             mouseEvent.preventDefault()
-            if (this.prop.onClick) this.prop.onClick(this)
+            if (this.prop.active && this.prop.onClick) this.prop.onClick(this)
         }
 
         this.fixStyle()
@@ -61,7 +67,7 @@ export class SimpleButton<TSimpleButton = SimpleButton<any>> extends Atom<{ prop
         const maxNucleusChildHeight = (Array.prototype.reduce.call(this.nucleus.children, (prev: HTMLElement, current: HTMLElement) => ((current.clientHeight > prev.clientHeight) ? current : prev)) as HTMLElement).clientHeight
         this.sub.button.style.minHeight = `${Math.max(this.sub.button.clientHeight, maxNucleusChildHeight + 10)}px`
 
-        if(this.prop.nucleusAlign === "start") {
+        if (this.prop.nucleusAlign === "start") {
             this.nucleus.classList.add(start)
         } else {
             this.nucleus.classList.remove(start)
@@ -102,5 +108,16 @@ export class SimpleButton<TSimpleButton = SimpleButton<any>> extends Atom<{ prop
         this.prop.active = toActive
 
         return toActive
+    }
+
+    startLoading() {
+        this.toggleActive(false)
+        this.sub.label.classList.replace(show, hide)
+        this.sub.loading.classList.replace(hide, show)
+    }
+    endLoading() {
+        this.toggleActive(true)
+        this.sub.label.classList.replace(hide, show)
+        this.sub.loading.classList.replace(show, hide)
     }
 }
