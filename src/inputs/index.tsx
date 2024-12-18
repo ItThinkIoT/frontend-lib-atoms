@@ -27,7 +27,8 @@ export interface IInputProp {
     mask?: string,
     placeholder?: string,
     mode?: HTMLInputModeAttribute,
-    class?: string[]
+    class?: string[],
+    max?: number
 }
 
 interface ISub {
@@ -55,7 +56,7 @@ export class Input extends Atom<{ prop: IInputProp, sub: ISub }> {
                 id={`${this.id}_input`}
                 type={this.prop.type}
                 {...(this.prop.mask) ? { ["data-mask"]: this.prop.mask } : {}}
-            {...(this.prop.mode) ? { inputmode: this.prop.mode } : {}}
+                {...(this.prop.mode) ? { inputmode: this.prop.mode } : {}}
             ></input>
             {(this.prop.placeholder !== undefined) ? <span sub={this.sub.placeholder} class={placeholder}>{this.prop.placeholder}</span> : ''}
 
@@ -72,16 +73,23 @@ export class Input extends Atom<{ prop: IInputProp, sub: ISub }> {
 
         this.getElement().onmouseleave = () => { }
 
-        this.sub.input.onfocus = () => {
+        this.sub.input.addEventListener("focuS", () => {
             this.setState(InputState.active)
-        }
+        })
 
-        this.sub.input.onblur = () => {
+        this.sub.input.addEventListener("blur", () => {
             if (this.sub.input.value !== "") return this.verify()
             this.setState(InputState.default)
-        }
+        })
 
-        this.sub.input.onkeyup = () => {
+        this.sub.input.addEventListener("keyup", (e) => {
+            if (this.prop.max !== undefined) {
+                if (this.sub.input.value.length > this.prop.max) {
+                    this.sub.input.value = this.value
+                    return
+                }
+            }
+
             this.value = this.sub.input.value
 
             if (this.prop.placeholder) {
@@ -91,7 +99,7 @@ export class Input extends Atom<{ prop: IInputProp, sub: ISub }> {
                     this.sub.placeholder.style.opacity = "0"
                 }
             }
-        }
+        })
     }
 
     setState(state: InputState) {
