@@ -82,6 +82,14 @@ export class Input extends Atom<{ prop: IInputProp, sub: ISub }> {
             this.setState(InputState.default)
         })
 
+        this.sub.input.addEventListener("keypress", (e) => {
+            if (this.prop.max !== undefined) {
+                if (this.sub.input.value.length > this.prop.max) {
+                    this.sub.input.value = this.value
+                    return
+                }
+            }
+        })
         this.sub.input.addEventListener("keyup", (e) => {
             if (this.prop.max !== undefined) {
                 if (this.sub.input.value.length > this.prop.max) {
