@@ -73,7 +73,7 @@ export class Input extends Atom<{ prop: IInputProp, sub: ISub }> {
 
         this.getElement().onmouseleave = () => { }
 
-        this.sub.input.addEventListener("focuS", () => {
+        this.sub.input.addEventListener("focus", () => {
             this.setState(InputState.active)
         })
 
