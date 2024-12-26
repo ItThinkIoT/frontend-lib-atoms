@@ -120,4 +120,10 @@ export class SimpleButton<TSimpleButton = SimpleButton<any>> extends Atom<{ prop
         this.sub.label.classList.replace(hide, show)
         this.sub.loading.classList.replace(show, hide)
     }
+
+    set onClick(callback: IProp<TSimpleButton>["onClick"]) {
+        this.prop.onClick = () => {
+            callback(this)
+        }
+    }
 }

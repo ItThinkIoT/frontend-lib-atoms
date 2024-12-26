@@ -48,11 +48,12 @@
 }
 
 .button.s_error button {
-    background-color: var(--ErrorDark);
+    color: var(--Pure) !important;
+    background-color: var(--ErrorDark) !important;
 }
 
 .button.s_success button {
-    background-color: var(--SuccessDark);
+    background-color: var(--SuccessDark) !important;
 }
 
 .button.s_disabled {

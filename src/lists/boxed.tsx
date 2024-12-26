@@ -14,7 +14,7 @@ export interface Item {
 }
 
 interface IProp {
-    selection?: SelectionType,
+    type?: SelectionType,
     items?: Array<Item>,
     onChange?: (item: ItemAtom) => void
 }
@@ -24,14 +24,14 @@ export class BoxedList extends Atom<{ prop: IProp, sub: { indicator: HTMLDivElem
     items: Array<ItemAtom> = []
 
     preRender: () => void = () => {
-        this.prop.selection ??= SelectionType.OPTION
+        this.prop.type ??= SelectionType.OPTION
         this.prop.items ??= []
     }
     struct: () => string = () => (
         <div class={[style.list]}>
             <div sub={this.sub.indicator} class={style.indicator}></div>
             <ul nucleus>
-                {this.prop.items.map(i => (<ItemAtom active={false} selection={this.prop.selection} {...i}
+                {this.prop.items.map(i => (<ItemAtom active={false} selection={this.prop.type} {...i}
                     onClick={(item) => {
                         this.selectItem(item)
                     }}></ItemAtom>
@@ -62,7 +62,8 @@ export class BoxedList extends Atom<{ prop: IProp, sub: { indicator: HTMLDivElem
     }
 
     selectItem(item: ItemAtom) {
-        if (this.prop.selection === SelectionType.OPTION) {
+        if(!item) return
+        if (this.prop.type === SelectionType.OPTION) {
             if (item.prop.active) return
             this.sub.indicator.style.opacity = "1"
             //desactive all
@@ -73,7 +74,7 @@ export class BoxedList extends Atom<{ prop: IProp, sub: { indicator: HTMLDivElem
             item.active()
             this.moveIndicator(item)
 
-        } else if (this.prop.selection === SelectionType.MULTIPLE) {
+        } else if (this.prop.type === SelectionType.MULTIPLE) {
             //toggle active
             if (item.prop.active) item.desactive()
             else item.active()
