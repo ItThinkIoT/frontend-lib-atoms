@@ -28,7 +28,8 @@ export interface IInputProp {
     placeholder?: string,
     mode?: HTMLInputModeAttribute,
     class?: string[],
-    max?: number
+    max?: number,
+    name?: string
 }
 
 interface ISub {
@@ -57,6 +58,7 @@ export class Input extends Atom<{ prop: IInputProp, sub: ISub }> {
                 type={this.prop.type}
                 {...(this.prop.mask) ? { ["data-mask"]: this.prop.mask } : {}}
                 {...(this.prop.mode) ? { inputmode: this.prop.mode } : {}}
+                {...(this.prop.name) ? { name: this.prop.name } : {}}
             ></input>
             {(this.prop.placeholder !== undefined) ? <span sub={this.sub.placeholder} class={placeholder}>{this.prop.placeholder}</span> : ''}
 
