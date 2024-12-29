@@ -151,10 +151,10 @@ export class Input extends Atom<{ prop: IInputProp, sub: ISub }> {
         return this.prop.value
     }
 
-    verify() {
-        if (!this.prop.verify) return
+    verify() : boolean {
+        if (!this.prop.verify) return true
         const error = this.prop.verify(this.sub.input.value)
-        if (error === null) return
+        if (error === null) return true
         this.setWithError(error)
     }
 
