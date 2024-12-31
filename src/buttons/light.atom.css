@@ -1,6 +1,6 @@
 .button button {
     background-color: var(--BackgroundSecondary) !important;
-    color: var(--LabelSecondary) !important;
+    color: var(--LabelPrimary) !important;
     border-top: 1px solid var(--LabelPrimary) !important;
     border-left: 1px solid var(--LabelPrimary) !important;
     border-right: 1px solid var(--LabelPrimary) !important;
