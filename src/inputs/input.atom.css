@@ -1,6 +1,8 @@
 .input {
     width: 100%;
-    padding-top: 20px;
+    --top: 20px;
+    --inputHeight: 36px;
+    padding-top: var(--top);
     position: relative;
     display: block;
 }
@@ -67,7 +69,7 @@
 .input input {
     display: block;
     width: calc(100% - 12px);
-    height: 36px;
+    height: var(--inputHeight);
     background-color: var(--BackgroundSecondary);
     border: none;
     border-radius: 3px;
@@ -93,4 +95,26 @@
 .input input:focus {
     outline: none;
     border: 1px solid var(--ActivePrimary)
+}
+
+/* Nucleus */
+.input > [a-n] {
+    /* border: 1px solid blue; */
+    position: absolute;
+    width: 100%;
+    height: var(--inputHeight);
+    top: var(--top);
+    float: right;
+    display: flex;
+    justify-items: center;
+    justify-content: center;
+    backdrop-filter: none;
+    pointer-events: none;
+}
+
+.loader {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
 }

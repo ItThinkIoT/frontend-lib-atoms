@@ -1,5 +1,5 @@
 import { Atom } from "atomicreact-ts";
-import { DarkTheme } from "../utils/theme.js";
+import { DarkTheme } from "../theme/default.js";
 
 export interface IPropIcon {
     width?: number,
