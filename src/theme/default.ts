@@ -1,6 +1,6 @@
-import { Theme } from "./index.js"
+import { BaseTheme } from "./index.js"
 
-export const DarkTheme: Theme = {
+export const DarkTheme: BaseTheme = {
     Pure: "#000",
     DarkPrimary: "#4B2A7B",
     ActivePrimary: "#A855F7",
@@ -20,7 +20,7 @@ export const DarkTheme: Theme = {
     Highlight: "#4BB8A9"
 }
 
-export const LightTheme: Theme = {
+export const LightTheme: BaseTheme = {
     Pure: "#FFF",
     DarkPrimary: "#9956fe",
     ActivePrimary: "#A855F7",
