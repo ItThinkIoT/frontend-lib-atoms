@@ -136,6 +136,7 @@ export class Input extends Atom<{ prop: IInputProp, sub: ISub }> {
                 _this.classList.add(s_active)
                 break
             case InputState.disabled:
+                window.getSelection().removeAllRanges()
                 _this.classList.add(s_disabled)
                 break
             case InputState.error:

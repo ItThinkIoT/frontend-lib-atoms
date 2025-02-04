@@ -37,6 +37,7 @@
 
 .input.s_error .error {
     display: block;
+    overflow: auto;
 }
 
 .input.s_error input {
