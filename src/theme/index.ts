@@ -69,13 +69,17 @@ export function onThemeChanged(callback = () => { }, { once }: { once: boolean }
 
 function hexToRgb(hex: string): { r: number; g: number; b: number } | null {
     hex = hex.replace(/^#/, "")
-
-    if (![3, 6].includes(hex.length)) {
+    
+    if (![3, 6, 8].includes(hex.length)) {
         return null
     }
 
     if (hex.length === 3) {
         hex = hex.split("").map(char => char + char).join("");
+    }
+
+    if (hex.length === 8) {
+        hex = hex.slice(0,6)
     }
 
     const bigint = parseInt(hex, 16);
