@@ -32,6 +32,7 @@ export interface IInputProp {
     max?: number,
     name?: string,
     loader?: boolean
+    requestFocus?: boolean
 }
 
 interface ISub {
@@ -51,6 +52,7 @@ export class Input extends Atom<{ prop: IInputProp, sub: ISub }> {
         if (this.prop.value == undefined) this.prop.value = ""
         if (this.prop.type == undefined) this.prop.type = "text"
         if (this.prop.loader == undefined) this.prop.loader = false
+        if (this.prop.requestFocus == undefined) this.prop.requestFocus = false
         this.prop.class ??= []
     }
 
@@ -113,6 +115,8 @@ export class Input extends Atom<{ prop: IInputProp, sub: ISub }> {
 
             this.setPlaceholder()
         })
+
+        if (this.prop.requestFocus) this.focus()
     }
 
     setState(state: InputState) {
@@ -195,5 +199,9 @@ export class Input extends Atom<{ prop: IInputProp, sub: ISub }> {
         } else {
             this.sub.placeholder.style.opacity = "0"
         }
+    }
+
+    focus() {
+        this.sub.input.focus()
     }
 }

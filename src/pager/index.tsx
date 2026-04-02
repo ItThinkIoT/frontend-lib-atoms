@@ -3,6 +3,7 @@ import { Atom, IAtomicElement } from "atomicreact-ts"
 import { pager, hidden } from "./pager.atom.css"
 
 interface IProp {
+    class?: string[]
     pages?: Array<Atom>,
     currentPageIndex?: number,
     transaction?: {
@@ -16,12 +17,13 @@ export class Pager<TPage extends Atom = Atom> extends Atom<{ prop: IProp }> {
     pages: Array<TPage> = []
 
     preRender = () => {
+        if (this.prop.class === undefined) this.prop.class = []
         if (this.prop.pages === undefined) this.prop.pages = []
         if (this.prop.currentPageIndex === undefined) this.prop.currentPageIndex = 0
     }
 
     struct = () => (
-        <section class={pager} nucleus>
+        <section class={[...this.prop.class, pager]} nucleus>
         </section>
     )
 
@@ -55,7 +57,8 @@ export class Pager<TPage extends Atom = Atom> extends Atom<{ prop: IProp }> {
         // console.log("Pager was rendered")
     }
 
-    setCurrentKey(pageID: Atom["id"]) {
+    setCurrentKey(pageID: Atom["id"], force = true) {
+        if (!force && this.pages[this.prop.currentPageIndex].id === pageID) return
         const index = this.pages.findIndex(page => page.id === pageID)
         if (index < 0) return
         this.setCurrent(index)
