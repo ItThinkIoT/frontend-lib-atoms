@@ -103,8 +103,8 @@ class ItemAtom extends Atom<{
                 <div sub={this.sub.input} class={(this.prop.selection === SelectionType.OPTION) ? style.option : style.multiple}></div>
             </div>
             <div class={style.detail}>
-                <label>{this.prop.title ?? this.prop.key}</label>
-                <p>{this.prop.description}</p>
+                {this.prop.title && <label>{this.prop.title ?? this.prop.key}</label>}
+                {this.prop.description && <p>{this.prop.description}</p>}
             </div>
         </li>
     )
@@ -112,6 +112,7 @@ class ItemAtom extends Atom<{
     onRender(): void {
         this.getElement().onclick = (e) => {
             e.preventDefault()
+            e.stopPropagation()
             if (this.prop.onClick) this.prop.onClick(this)
         }
     }
