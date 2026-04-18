@@ -126,4 +126,13 @@ export class SimpleButton<TSimpleButton = SimpleButton<any>> extends Atom<{ prop
             callback(this)
         }
     }
+
+    set label(newLabel: IProp<TSimpleButton>["label"]) {
+        this.prop.label = newLabel
+        this.sub.label.innerText = typeof newLabel === "string" ? newLabel : ""
+        if (typeof newLabel !== "string" && newLabel instanceof HTMLElement) {
+            this.sub.label.innerText = ""
+            this.sub.label.appendChild(newLabel)
+        }
+    }
 }
