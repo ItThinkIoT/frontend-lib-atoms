@@ -74,7 +74,7 @@ export class TurnstileCaptcha extends Atom<{ sub: ISub, prop: IProp }> {
             theme: this.prop.theme,
             size: this.prop.size,
             callback: (token: string) => {
-                if (this.prop.onToken) this.prop.onToken(token)
+                if (this.prop.onToken) this.prop.onToken(this.prop.useByPassToken ?? token)
             }
         })
 
