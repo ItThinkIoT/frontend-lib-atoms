@@ -155,6 +155,7 @@ export class Input extends Atom<{ prop: IInputProp, sub: ISub }> {
         this.prop.value = value
         this.sub.input.value = this.prop.value
         // if(value !== "") this.setState(InputState.active)
+        this.setPlaceholder()
     }
 
     get value() {
